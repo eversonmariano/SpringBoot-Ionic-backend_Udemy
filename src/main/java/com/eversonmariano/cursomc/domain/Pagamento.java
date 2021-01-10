@@ -1,5 +1,7 @@
 package com.eversonmariano.cursomc.domain;
 import com.eversonmariano.cursomc.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,6 +14,8 @@ public abstract class Pagamento implements Serializable {
     @Id
     private Integer id;
     private Integer estado;
+
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name="pedido_id")
     @MapsId
