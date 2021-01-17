@@ -1,6 +1,7 @@
 package com.eversonmariano.cursomc.services;
 
 import com.eversonmariano.cursomc.domain.Categoria;
+import com.eversonmariano.cursomc.dto.CategoriaDTO;
 import com.eversonmariano.cursomc.repositories.CategoriaRepository;
 import com.eversonmariano.cursomc.services.exceptions.DataIntegrityException;
 import com.eversonmariano.cursomc.services.exceptions.ObjectNotFoundException;
@@ -52,6 +53,10 @@ public class CategoriaService {
   public Page<Categoria> findPage(Integer page, Integer linesPerPage,  String direction, String orderBy) {
     PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
     return repo.findAll(pageRequest);
+  }
+
+  public Categoria fromDTO(CategoriaDTO objDto){
+    return new Categoria(objDto.getId(), objDto.getNome());
   }
 
 
