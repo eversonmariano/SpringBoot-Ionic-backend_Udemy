@@ -4,6 +4,7 @@ import com.eversonmariano.cursomc.domain.Categoria;
 import com.eversonmariano.cursomc.domain.Cliente;
 import com.eversonmariano.cursomc.dto.CategoriaDTO;
 import com.eversonmariano.cursomc.dto.ClienteDTO;
+import com.eversonmariano.cursomc.dto.ClienteNewDTO;
 import com.eversonmariano.cursomc.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +28,17 @@ public class ClienteResource {
     public ResponseEntity<Cliente> find(@PathVariable Integer id) {
         Cliente obj = service.find(id);
         return ResponseEntity.ok().body(obj);
+
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
+        Cliente obj = service.fromDTO(objDto);
+        obj = service.insert(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("{/id}").buildAndExpand(obj.getId()).toUri();
+
+        return ResponseEntity.created(uri).build();
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.PUT)
